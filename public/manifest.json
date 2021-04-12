@@ -1,33 +1,36 @@
 {
-  "manifest_version": 2,
-
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
-  "version": "1.0",
-
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
-
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
-  },
-
-  "content_scripts": [
-      {
-          "matches": ["<all_urls>"],
-          "js": ["js/vendor.js", "js/content_script.js"]
-      }
-  ],
-
   "background": {
-    "scripts": ["js/vendor.js", "js/background.js"]
+     "persistent": false,
+     "scripts": [ "js/background.js" ]
   },
-
-  "permissions": [
-    "storage",
-    "<all_urls>"
-  ]
+  "content_scripts": [ {
+     "js": ["js/vendor.js", "js/content_script.js"],
+     "matches": [ 
+        "*://*/*.md", 
+        "file:///*/*.md", 
+        "*://yuque.com/*/markdown?plain=true&linebreak=false&anchor=false",
+        "*://yuque.alibaba-inc.com/*/markdown?plain=true&linebreak=false&anchor=false"
+      ]
+  } ],
+  "description": "View markdown as a slideshow（support remark & takahashi mode）",
+  "icons": {
+     "38": "icon/38.png",
+     "76": "icon/76.png",
+     "128": "icon/128.png",
+     "256": "icon/256.png"
+  },
+  "manifest_version": 2,
+  "name": "Remark It!",
+  "offline_enabled": true,
+  "page_action": {
+     "default_icon": "icon/38.png",
+     "default_title": "Remark It"
+  },
+  "options_ui": {
+      "open_in_tab": true,
+      "page": "options.html"
+   },
+  "permissions": [ "tabs", "*://*/*.md", "background", "storage", "<all_urls>"],
+  "version": "1.0",
+  "web_accessible_resources": [ "*" ]
 }
